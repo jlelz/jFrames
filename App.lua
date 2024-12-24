@@ -3,7 +3,7 @@ local _, Addon = ...;
 Addon.FRAMES = CreateFrame( 'Frame' );
 Addon.FRAMES:RegisterEvent( 'ADDON_LOADED' );
 Addon.FRAMES:SetScript( 'OnEvent',function( self,Event,AddonName )
-    if( AddonName == 'jFramePositions' ) then
+    if( AddonName == 'jFrames' ) then
 
         self.Hooked = {};
 
