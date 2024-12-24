@@ -16,6 +16,6 @@ UI works with Classic Era, Classic Wrath and Retail
 ## FAQ
 
 ## Issues
-https://github.com/jadissa/jFrames/issues
+https://github.com/jlelz/jFrames/issues
 
 ## Screenshots
