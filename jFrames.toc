@@ -5,7 +5,7 @@
 ## Author: jlelz
 ## X-Realm: Moonguard/Grobbulus/Whitemane
 
-## DefaultState: disabled
+## DefaultState: enabled
 ## SavedVariables: jFrames
 
 ## Interface: 110007
