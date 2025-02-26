@@ -78,9 +78,9 @@ Addon.FRAMES:SetScript( 'OnEvent',function( self,Event,AddonName )
                         AnchorPoint = 'right',
                         RelativePoint = 'center',
                         x = -600,
-                        y = -212,
+                        y = -195,
                     },
-                    Width = 474,
+                    Width = 538,
                     Height = 350,
                     Hooks = {
                         'FCF_ResetAllWindows',
