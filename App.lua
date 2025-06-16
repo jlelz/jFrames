@@ -233,7 +233,7 @@ Addon.FRAMES:SetScript( 'OnEvent',function( self,Event,AddonName )
             -- /wow-retail-source/Interface/FrameXML/EditModePresetLayouts.lua
             -- https://wowpedia.fandom.com/wiki/Category:API_namespaces/C_EditMode
             --[[if( EditModeManagerFrame ) then
-                print( 'jFramePositions printing useCompactPartyFrames value' );
+                print( 'jFramePositions printing UseRaidStylePartyFrames value' );
                 print( Enum.EditModeUnitFrameSetting.UseRaidStylePartyFrames );
             end]]
 
@@ -301,6 +301,12 @@ Addon.FRAMES:SetScript( 'OnEvent',function( self,Event,AddonName )
                 end
             end );
         end
+
+        hooksecurefunc(EventRegistry, "TriggerEvent", function(registry, event, ...)
+            --print( 'EventRegistry','TriggerEvent',registry,event );
+            -- try to capture something meaningful for the purpose of...
+            --- EventRegistry:RegisterCallback( event, function()
+        end );
 
         local EventFrame = CreateFrame( 'Frame' );
         EventFrame:RegisterEvent( 'COMPACT_UNIT_FRAME_PROFILES_LOADED' );
