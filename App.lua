@@ -81,7 +81,7 @@ Addon.FRAMES:SetScript( 'OnEvent',function( self,Event,AddonName )
                         y = -195,
                     },
                     Width = 538,
-                    Height = 350,
+                    Height = 348,
                     Hooks = {
                         'FCF_ResetAllWindows',
                         'FloatingChatFrame_Update',
