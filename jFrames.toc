@@ -1,5 +1,6 @@
 ## Title: |cff009bffj|cffffffffFrames|r
-## Notes: j's Frame Postions mod
+## Notes: j's Frame mod
+## Version: @project-version@
 ## X-Category: system
 
 ## Author: jlelz
@@ -29,4 +30,4 @@ Libs\AceHook-3.0\AceHook-3.0.xml
 Libs\AceEvent-3.0\AceEvent-3.0.xml
 Libs\jUI\index.xml
 
-App.lua
+Index.xml
