@@ -98,7 +98,9 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
 
         -- Forcefully override Interface > Options changes
         hooksecurefunc( 'MultiActionBar_Update',function()
-            Addon.FRAMES:Debug( 'Refreshing...' );
+            if( Addon.APP:GetValue( 'Debug' ) ) then
+                Addon.FRAMES:Debug( 'Refreshing...' );
+            end
             Addon.APP:Refresh();
         end );
 

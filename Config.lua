@@ -13,59 +13,35 @@ Addon.CONFIG:SetScript( 'OnEvent',function( self,Event,AddonName )
             local GetHudSettings = function()
                 local Order = 1;
                 local Settings = {
-                    HudSettings = {
+                    BottomBars = {
                         type = 'header',
                         order = Order,
-                        name = 'Hud Settings',
+                        name = 'Bottom Screen Bars',
                     },
-                };
-                Order = Order+1;
-                Settings.MainMenuBarShown = {
-                    order = Order,
-                    type = 'toggle',
-                    name = 'Show MainMenuBar',
-                    desc = 'If the hud should show your Main Menu Bar',
-                    arg = 'MainMenuBarShown',
-                };
-                Order = Order+1;
-                Settings.MultiBarBottomLeftShown = {
-                    order = Order,
-                    type = 'toggle',
-                    name = 'Show Action Bar 2',
-                    desc = 'If the hud should show your Action Bar 2',
-                    arg = 'MultiBarBottomLeftShown',
                 };
                 Order = Order+1;
                 Settings.MultiBarBottomRightShown = {
                     order = Order,
                     type = 'toggle',
-                    name = 'Show Action Bar 3',
+                    name = 'Top Bar Shown',
                     desc = 'If the hud should show your Action Bar 3',
                     arg = 'MultiBarBottomRightShown',
                 };
                 Order = Order+1;
-                Settings.MultiBarLeftShown = {
+                Settings.MultiBarBottomLeftShown = {
                     order = Order,
                     type = 'toggle',
-                    name = 'Show Action Bar 4',
-                    desc = 'If the hud should show your Action Bar 4',
-                    arg = 'MultiBarLeftShown',
+                    name = 'Middle Bar Shown',
+                    desc = 'If the hud should show your Action Bar 2',
+                    arg = 'MultiBarBottomLeftShown',
                 };
                 Order = Order+1;
-                Settings.MultiBarRightShown = {
+                Settings.MainMenuBarShown = {
                     order = Order,
                     type = 'toggle',
-                    name = 'Show Action Bar 5',
-                    desc = 'If the hud should show your Action Bar 5',
-                    arg = 'MultiBarRightShown',
-                };
-                Order = Order+1;
-                Settings.ObjectiveTrackerCollapsed = {
-                    order = Order,
-                    type = 'toggle',
-                    name = 'Collapse Objective Tracker',
-                    desc = 'If the hud should automatically collapse the Objective Tracker',
-                    arg = 'ObjectiveTrackerCollapsed',
+                    name = 'Bottom Bar Shown',
+                    desc = 'If the hud should show your Main Menu Bar',
+                    arg = 'MainMenuBarShown',
                 };
                 Order = Order+1;
                 Settings.StanceBarShown = {
@@ -74,6 +50,56 @@ Addon.CONFIG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     name = 'Show StanceBar',
                     desc = 'If the hud should show your Stance Bar',
                     arg = 'StanceBarShown',
+                };
+
+
+
+                Order = Order+1;
+                Settings.SideBars = {
+                    type = 'header',
+                    order = Order,
+                    name = 'Right Screen Bars',
+                };
+                Order = Order+1;
+                Settings.MultiBarLeftShown = {
+                    order = Order,
+                    type = 'toggle',
+                    name = 'Left Bar Shown',
+                    desc = 'If the hud should show your Action Bar 4',
+                    arg = 'MultiBarLeftShown',
+                };
+                Order = Order+1;
+                Settings.MultiBarRightShown = {
+                    order = Order,
+                    type = 'toggle',
+                    name = 'Right Bar Shown',
+                    desc = 'If the hud should show your Action Bar 5',
+                    arg = 'MultiBarRightShown',
+                };
+                Order = Order+1;
+                Settings.ObjectiveTrackerCollapsed = {
+                    order = Order,
+                    type = 'toggle',
+                    name = 'Objective Tracker Collapsed',
+                    desc = 'If the hud should automatically collapse the Objective Tracker',
+                    arg = 'ObjectiveTrackerCollapsed',
+                };
+
+
+
+                Order = Order+1;
+                Settings.Other = {
+                    type = 'header',
+                    order = Order,
+                    name = '',
+                };
+                Order = Order+1;
+                Settings.Debug = {
+                    order = Order,
+                    type = 'toggle',
+                    name = 'Debug Shown',
+                    desc = 'Show Debug messages in chat when the default blizzard UI tries to apply its own bar settings',
+                    arg = 'Debug',
                 };
 
                 return Settings;
