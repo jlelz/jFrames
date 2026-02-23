@@ -27,6 +27,20 @@ Addon.CONFIG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     desc = 'If the hud should show your Main Menu Bar',
                     arg = 'MainMenuBarShown',
                 };
+                Settings.MultiBarBottomLeftShown = {
+                    order = Order,
+                    type = 'toggle',
+                    name = 'Show Action Bar 2',
+                    desc = 'If the hud should show your Action Bar 2',
+                    arg = 'MultiBarBottomLeftShown',
+                };
+                Settings.MultiBarBottomRightShown = {
+                    order = Order,
+                    type = 'toggle',
+                    name = 'Show Action Bar 3',
+                    desc = 'If the hud should show your Action Bar 3',
+                    arg = 'MultiBarBottomRightShown',
+                };
                 Settings.ObjectiveTrackerCollapsed = {
                     order = Order,
                     type = 'toggle',

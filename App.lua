@@ -25,8 +25,8 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
 
         Addon.APP.Refresh = function( self )
             -- Actionbar 1
-            local MainActionBarParent = CreateFrame( 'Frame',nil,UIParent,'SecureHandlerStateTemplate' );
             if( MainActionBar ) then
+                local MainActionBarParent = CreateFrame( 'Frame',nil,UIParent,'SecureHandlerStateTemplate' );
                 MainActionBar:SetParent( MainActionBarParent);
                 if( self:GetValue( 'MainMenuBarShown' ) ) then
                     RegisterStateDriver( MainActionBarParent,'visibility','show' );
@@ -36,8 +36,8 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
             end
 
             -- Stancebar
-            local StanceBarParent = CreateFrame( 'Frame',nil,UIParent,'SecureHandlerStateTemplate' );
             if( StanceBar ) then
+                local StanceBarParent = CreateFrame( 'Frame',nil,UIParent,'SecureHandlerStateTemplate' );
                 StanceBar:SetParent( StanceBarParent);
                 if( self:GetValue( 'StanceBarShown' ) ) then
                     RegisterStateDriver( StanceBarParent,'visibility','show' );
@@ -52,6 +52,24 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                     ObjectiveTrackerFrame:SetCollapsed( false );
                 else
                     ObjectiveTrackerFrame:SetCollapsed( true );
+                end
+            end
+
+            -- Actionbar 2
+            if( MultiBarBottomLeft ) then
+                if( self:GetValue( 'MultiBarBottomLeftShown' ) ) then
+                    MultiBarBottomLeft:Show();
+                else
+                    MultiBarBottomLeft:Hide();
+                end
+            end
+
+            -- Actionbar 3
+            if( MultiBarBottomRight ) then
+                if( self:GetValue( 'MultiBarBottomRightShown' ) ) then
+                    MultiBarBottomRight:Show();
+                else
+                    MultiBarBottomRight:Hide();
                 end
             end
         end

@@ -12,10 +12,12 @@ Addon.DB:SetScript( 'OnEvent',function( self,Event,AddonName )
         Addon.DB.GetDefaults = function( self )
             return {
                 MainMenuBarShown = false,
-
-                ObjectiveTrackerCollapsed = true,
+                MultiBarBottomLeftShown = false,
+                MultiBarBottomRightShown = false,
                 
                 StanceBarShown = false,
+
+                ObjectiveTrackerCollapsed = true,
             };
         end
 
