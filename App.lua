@@ -96,6 +96,12 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
         Addon.CONFIG:Init();
         Addon.APP:Refresh();
 
+        -- Forcefully override Interface > Options changes
+        hooksecurefunc( 'MultiActionBar_Update',function()
+            Addon.FRAMES:Debug( 'Refreshing...' );
+            Addon.APP:Refresh();
+        end );
+
         self:UnregisterEvent( 'ADDON_LOADED' );
     end
 end );
