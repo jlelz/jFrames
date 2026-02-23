@@ -72,6 +72,24 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
                     MultiBarBottomRight:Hide();
                 end
             end
+
+            -- Multibar 4
+            if( MultiBarLeft ) then
+                if( self:GetValue( 'MultiBarLeftShown' ) ) then
+                    MultiBarLeft:Show();
+                else
+                    MultiBarLeft:Hide();
+                end
+            end
+
+            -- Multibar 5
+            if( MultiBarRight ) then
+                if( self:GetValue( 'MultiBarRightShown' ) ) then
+                    MultiBarRight:Show();
+                else
+                    MultiBarRight:Hide();
+                end
+            end
         end
 
         Addon.DB:Init();

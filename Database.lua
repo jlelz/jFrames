@@ -14,6 +14,8 @@ Addon.DB:SetScript( 'OnEvent',function( self,Event,AddonName )
                 MainMenuBarShown = false,
                 MultiBarBottomLeftShown = false,
                 MultiBarBottomRightShown = false,
+                MultiBarRightShown = true,
+                MultiBarLeftShown = true,
                 
                 StanceBarShown = false,
 

@@ -27,6 +27,7 @@ Addon.CONFIG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     desc = 'If the hud should show your Main Menu Bar',
                     arg = 'MainMenuBarShown',
                 };
+                Order = Order+1;
                 Settings.MultiBarBottomLeftShown = {
                     order = Order,
                     type = 'toggle',
@@ -34,6 +35,7 @@ Addon.CONFIG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     desc = 'If the hud should show your Action Bar 2',
                     arg = 'MultiBarBottomLeftShown',
                 };
+                Order = Order+1;
                 Settings.MultiBarBottomRightShown = {
                     order = Order,
                     type = 'toggle',
@@ -41,6 +43,23 @@ Addon.CONFIG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     desc = 'If the hud should show your Action Bar 3',
                     arg = 'MultiBarBottomRightShown',
                 };
+                Order = Order+1;
+                Settings.MultiBarLeftShown = {
+                    order = Order,
+                    type = 'toggle',
+                    name = 'Show Action Bar 4',
+                    desc = 'If the hud should show your Action Bar 4',
+                    arg = 'MultiBarLeftShown',
+                };
+                Order = Order+1;
+                Settings.MultiBarRightShown = {
+                    order = Order,
+                    type = 'toggle',
+                    name = 'Show Action Bar 5',
+                    desc = 'If the hud should show your Action Bar 5',
+                    arg = 'MultiBarRightShown',
+                };
+                Order = Order+1;
                 Settings.ObjectiveTrackerCollapsed = {
                     order = Order,
                     type = 'toggle',
@@ -48,6 +67,7 @@ Addon.CONFIG:SetScript( 'OnEvent',function( self,Event,AddonName )
                     desc = 'If the hud should automatically collapse the Objective Tracker',
                     arg = 'ObjectiveTrackerCollapsed',
                 };
+                Order = Order+1;
                 Settings.StanceBarShown = {
                     order = Order,
                     type = 'toggle',
