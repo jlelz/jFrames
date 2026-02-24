@@ -24,6 +24,13 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
         end
 
         Addon.APP.Refresh = function( self )
+            if( InCombatLockdown() ) then
+                return;
+            end
+            if( Addon.APP:GetValue( 'Debug' ) ) then
+                Addon.FRAMES:Debug( 'Refreshing...' );
+            end
+
             -- Actionbar 1
             if( MainActionBar ) then
                 local MainActionBarParent = CreateFrame( 'Frame',nil,UIParent,'SecureHandlerStateTemplate' );
@@ -98,11 +105,13 @@ Addon.APP:SetScript( 'OnEvent',function( self,Event,AddonName )
 
         -- Forcefully override Interface > Options changes
         hooksecurefunc( 'MultiActionBar_Update',function()
-            if( Addon.APP:GetValue( 'Debug' ) ) then
-                Addon.FRAMES:Debug( 'Refreshing...' );
-            end
             Addon.APP:Refresh();
         end );
+
+        -- Remove Vehicle from MainMenuBar
+        if( MainMenuBarVehicleLeaveButton ) then
+            MainMenuBarVehicleLeaveButton:SetParent( PlayerFrame );
+        end
 
         self:UnregisterEvent( 'ADDON_LOADED' );
     end
