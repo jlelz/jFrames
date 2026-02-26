@@ -153,6 +153,9 @@ Addon.CONFIG:SetScript( 'OnEvent',function( self,Event,AddonName )
 
             SLASH_JFRAMES1, SLASH_JFRAMES2 = '/jf', '/jframes';
             SlashCmdList[ string.upper( AddonName ) ] = function( Msg,EditBox )
+                if( InCombatLockdown() ) then
+                    Addon.FRAMES:Error( 'You are in combat' );
+                end
                 if( InterfaceOptionsFrame_OpenToCategory ) then
                     InterfaceOptionsFrame_OpenToCategory( AddonName );
                     InterfaceOptionsFrame_OpenToCategory( AddonName );
