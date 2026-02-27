@@ -84,10 +84,6 @@ function jFrames:Refresh()
         end
     end
 
-    if( DurabilityFrame ) then
-        DurabilityFrame:Show();
-    end
-
     if( self:GetValue( 'Debug' ) ) then
         Library.FRAMES:Debug( 'Done' );
     end
