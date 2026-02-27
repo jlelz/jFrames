@@ -1,91 +1,57 @@
-local _, Addon = ...;
+local _,Library = ...;
+local jFrames = LibStub( 'AceAddon-3.0' ):GetAddon( 'jFrames' );
 
-Addon.DB = CreateFrame( 'Frame' );
-Addon.DB:RegisterEvent( 'ADDON_LOADED' );
-Addon.DB:SetScript( 'OnEvent',function( self,Event,AddonName )
-    if( AddonName == 'jFrames' ) then
-
-        --
-        --  Get module defaults
-        --
-        --  @return table
-        Addon.DB.GetDefaults = function( self )
-            return {
-                MainMenuBarShown = false,
-                MultiBarBottomLeftShown = false,
-                MultiBarBottomRightShown = false,
-                MultiBarRightShown = true,
-                MultiBarLeftShown = true,
-                
-                StanceBarShown = false,
-
-                ObjectiveTrackerCollapsed = true,
-
-                Debug = false,
-            };
-        end
-
-        Addon.DB.Reset = function( self )
-            if( not self.db ) then
-                return;
-            end
-            self.db:ResetDB();
-        end
-
-        --
-        --  Get module persistence
-        --
-        --  @return table
-        Addon.DB.GetPersistence = function( self )
-            if( not self.db ) then
-                return;
-            end
-            local Player = UnitName( 'player' );
-            local Realm = GetRealmName();
-            local PlayerRealm = Player..'-'..Realm;
-
-            self.persistence = self.db.global;
-            if( not self.persistence ) then
-                return;
-            end
-            return self.persistence;
-        end
-
-        --
-        -- Set DB value
-        --
-        -- @return void
-        Addon.DB.SetValue = function( self,Index,Value )
-            if( self:GetPersistence()[ Index ] ~= nil ) then
-                self:GetPersistence()[ Index ] = Value;
-            end
-        end
-
-        --
-        -- Get DB value
-        --
-        -- @return mixed
-        Addon.DB.GetValue = function( self,Index )
-            if( self:GetPersistence()[ Index ] ~= nil ) then
-                return self:GetPersistence()[ Index ];
-            end
-        end
-
-        --
-        --  Module init
-        --
-        --  @return void
-        Addon.DB.Init = function( self )
-            self.db = LibStub( 'AceDB-3.0' ):New( AddonName,{ global = self:GetDefaults() },true );
-            if( not self.db ) then
-                return;
-            end
-
-            if( not self:GetPersistence() ) then
-                return;
-            end
-        end
-        
-        Addon.DB:UnregisterEvent( 'ADDON_LOADED' );
+function jFrames:SetDBValue( Index,Value )
+    if( self:GetPersistence()[ Index ] ~= nil ) then
+        self:GetPersistence()[ Index ] = Value;
     end
-end );
+end
+
+function jFrames:GetDBValue( Index )
+    if( self:GetPersistence()[ Index ] ~= nil ) then
+        return self:GetPersistence()[ Index ];
+    end
+end
+
+function jFrames:GetPersistence()
+    return self.db.global;
+end
+
+function jFrames:Reset()
+    -- Wipe Database
+    wipe( self.db.global ); 
+
+    -- Reset Profile
+    self.db:ResetProfile();
+
+    -- Refresh Settings
+    if( C_UI and C_UI.Reload ) then
+        C_UI.Reload();
+    else
+        ReloadUI();
+    end
+end
+
+function jFrames:InitializeDB()
+    local Defaults = {
+        global = {
+            MainMenuBarShown = false,
+            MultiBarBottomLeftShown = false,
+            MultiBarBottomRightShown = false,
+            MultiBarRightShown = true,
+            MultiBarLeftShown = true,
+            
+            StanceBarShown = false,
+
+            ObjectiveTrackerCollapsed = true,
+
+            Debug = false,
+        },
+    };
+
+    self.db = LibStub( 'AceDB-3.0' ):New( self:GetName(),Defaults,'global' );
+
+    self.db.RegisterCallback( self,'OnProfileChanged','Reset' );
+    self.db.RegisterCallback( self,'OnProfileCopied','Reset' );
+    self.db.RegisterCallback( self,'OnProfileReset','Reset' );
+end
