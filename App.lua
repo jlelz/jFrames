@@ -10,9 +10,6 @@ function jFrames:GetValue( Index )
 end
 
 function jFrames:Refresh()
-    if( InCombatLockdown() ) then
-        return;
-    end
     if( self:GetValue( 'Debug' ) ) then
         Library.FRAMES:Debug( 'Refreshing...' );
     end
