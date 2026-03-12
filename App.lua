@@ -16,17 +16,21 @@ function jFrames:Refresh()
 
     -- Actionbar 1
     if( self:GetValue( 'MainMenuBarShown' ) ) then
-        RegisterStateDriver( MainActionBar:GetParent(),'visibility','show' );
+        MainActionBar:GetParent():Show();
+        --RegisterStateDriver( MainActionBar:GetParent(),'visibility','show' );
     else
-        RegisterStateDriver( MainActionBar:GetParent(),'visibility','hide' );
+        --RegisterStateDriver( MainActionBar:GetParent(),'visibility','hide' );
+        MainActionBar:GetParent():Hide();
     end
 
     -- Stancebar
     if( StanceBar ) then
         if( self:GetValue( 'StanceBarShown' ) ) then
-            RegisterStateDriver( StanceBar:GetParent(),'visibility','show' );
+            StanceBar:GetParent():Show();
+            --RegisterStateDriver( StanceBar:GetParent(),'visibility','show' );
         else
-            RegisterStateDriver( StanceBar:GetParent(),'visibility','hide' );
+            --RegisterStateDriver( StanceBar:GetParent(),'visibility','hide' );
+            StanceBar:GetParent():Hide();
         end
     end
 
