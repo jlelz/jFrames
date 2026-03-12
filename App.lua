@@ -15,24 +15,18 @@ function jFrames:Refresh()
     end
 
     -- Actionbar 1
-    if( MainActionBar ) then
-        local MainActionBarParent = CreateFrame( 'Frame',nil,UIParent,'SecureHandlerStateTemplate' );
-        MainActionBar:SetParent( MainActionBarParent);
-        if( self:GetValue( 'MainMenuBarShown' ) ) then
-            RegisterStateDriver( MainActionBarParent,'visibility','show' );
-        else
-            RegisterStateDriver( MainActionBarParent,'visibility','hide' );
-        end
+    if( self:GetValue( 'MainMenuBarShown' ) ) then
+        RegisterStateDriver( MainActionBar:GetParent(),'visibility','show' );
+    else
+        RegisterStateDriver( MainActionBar:GetParent(),'visibility','hide' );
     end
 
     -- Stancebar
     if( StanceBar ) then
-        local StanceBarParent = CreateFrame( 'Frame',nil,UIParent,'SecureHandlerStateTemplate' );
-        StanceBar:SetParent( StanceBarParent);
         if( self:GetValue( 'StanceBarShown' ) ) then
-            RegisterStateDriver( StanceBarParent,'visibility','show' );
+            RegisterStateDriver( StanceBar:GetParent(),'visibility','show' );
         else
-            RegisterStateDriver( StanceBarParent,'visibility','hide' );
+            RegisterStateDriver( StanceBar:GetParent(),'visibility','hide' );
         end
     end
 
@@ -87,6 +81,17 @@ function jFrames:Refresh()
 end
 
 function jFrames:OnEnable()
+    -- Actionbar 1
+    if( MainActionBar ) then
+        local MainActionBarParent = CreateFrame( 'Frame',nil,UIParent,'SecureHandlerStateTemplate' );
+        MainActionBar:SetParent( MainActionBarParent);
+    end
+    -- Stancebar
+    if( StanceBar ) then
+        local StanceBarParent = CreateFrame( 'Frame',nil,UIParent,'SecureHandlerStateTemplate' );
+        StanceBar:SetParent( StanceBarParent);
+    end
+
     -- Forcefully override Interface > Options changes
     hooksecurefunc( 'MultiActionBar_Update',function()
         self:Refresh();
