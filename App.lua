@@ -10,6 +10,9 @@ function jFrames:GetValue( Index )
 end
 
 function jFrames:Refresh()
+    if( ( Library:IsRetail() and InCombatLockdown() ) ) then
+        return;
+    end
     if( self:GetValue( 'Debug' ) ) then
         Library.FRAMES:Debug( 'Refreshing...' );
     end
@@ -114,6 +117,10 @@ function jFrames:OnEnable()
 end
 
 function jFrames:ConfigOpen( Input )
+    if( ( Library:IsRetail() and InCombatLockdown() ) ) then
+        Library.FRAMES:Error( 'You are in combat' );
+        return;
+    end
     if( not Input or Input:trim() == "" ) then
 
         if( InterfaceOptionsFrame_OpenToCategory ) then
