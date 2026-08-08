@@ -83,8 +83,10 @@ function jFrames:Refresh()
     end
 
     -- PlayerFrame
-    if( not self:GetValue( 'PlayerFrameAlwaysShown' ) and PlayerFrame ) then
-        RegisterAttributeDriver( PlayerFrame,"state-visibility","[combat] show; hide" );
+    if( RegisterAttributeDriver and PlayerFrame ) then
+        if( not self:GetValue( 'PlayerFrameAlwaysShown' ) ) then
+            RegisterAttributeDriver( PlayerFrame,"state-visibility","[combat] show; hide" );
+        end
     end
 
     if( self:GetValue( 'Debug' ) ) then
