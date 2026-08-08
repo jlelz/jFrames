@@ -82,6 +82,11 @@ function jFrames:Refresh()
         end
     end
 
+    -- PlayerFrame
+    if( not self:GetValue( 'PlayerFrameAlwaysShown' ) and PlayerFrame ) then
+        RegisterAttributeDriver( PlayerFrame,"state-visibility","[combat] show; hide" );
+    end
+
     if( self:GetValue( 'Debug' ) ) then
         Library.FRAMES:Debug( 'Done' );
     end
@@ -109,6 +114,13 @@ function jFrames:OnEnable()
             self:Refresh();
         end)
     end
+
+    --[[
+    Frames.Events = CreateFrame( 'Frame' );
+    Frames.Events:SetScript( 'OnEvent',function( self,Event,... )
+        if( Event == )
+    end );
+    ]]
 
     -- Remove Vehicle from MainMenuBar
     if( MainMenuBarVehicleLeaveButton ) then

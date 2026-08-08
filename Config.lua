@@ -76,6 +76,22 @@ function jFrames:GetSettings()
         };
 
         Order = Order+1;
+        Settings.Plates = {
+            type = 'header',
+            order = Order,
+            name = 'Plates',
+        };
+
+        Order = Order+1;
+        Settings.PlayerFrame = {
+            type = 'toggle',
+            order = Order,
+            name = 'Player',
+            desc = 'Show out of combat',
+            arg = 'PlayerFrameAlwaysShown',
+        };
+
+        Order = Order+1;
         Settings.Other = {
             type = 'header',
             order = Order,

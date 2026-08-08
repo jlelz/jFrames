@@ -45,6 +45,8 @@ function jFrames:InitializeDB()
 
             ObjectiveTrackerCollapsed = true,
 
+            PlayerFrameAlwaysShown = true,
+
             Debug = false,
         },
     };
