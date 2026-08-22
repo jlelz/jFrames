@@ -10,82 +10,87 @@ function jFrames:GetValue( Index )
 end
 
 function jFrames:Refresh()
-    if( ( Library:IsRetail() and InCombatLockdown() ) ) then
+    -- Safety check: State drivers cannot be dynamically re-registered while in combat lockdown
+    if( InCombatLockdown() ) then
         return;
     end
+    
     if( self:GetValue( 'Debug' ) ) then
         Library.FRAMES:Debug( 'Refreshing...' );
     end
 
-    -- Actionbar 1
-    if( self:GetValue( 'MainMenuBarShown' ) ) then
-        MainActionBar:GetParent():Show();
-        --RegisterStateDriver( MainActionBar:GetParent(),'visibility','show' );
-    else
-        --RegisterStateDriver( MainActionBar:GetParent(),'visibility','hide' );
-        MainActionBar:GetParent():Hide();
-    end
-
-    -- Stancebar
-    if( StanceBar ) then
-        if( self:GetValue( 'StanceBarShown' ) ) then
-            StanceBar:GetParent():Show();
-            --RegisterStateDriver( StanceBar:GetParent(),'visibility','show' );
+    -- Actionbar 1 (Main Menu Bar Parent)
+    if ( self.MainActionBarParent ) then
+        if ( self:GetValue( 'MainMenuBarShown' ) ) then
+            RegisterStateDriver( self.MainActionBarParent, 'visibility', 'show' );
         else
-            --RegisterStateDriver( StanceBar:GetParent(),'visibility','hide' );
-            StanceBar:GetParent():Hide();
+            RegisterStateDriver( self.MainActionBarParent, 'visibility', 'hide' );
         end
     end
 
-    -- Objective Tracker
-    if( ObjectiveTrackerFrame ) then
-        if( not self:GetValue( 'ObjectiveTrackerCollapsed' ) ) then
-            ObjectiveTrackerFrame:SetCollapsed( false );
+    -- Stancebar
+    if ( self.StanceBarParent ) then
+        if ( self:GetValue( 'StanceBarShown' ) ) then
+            RegisterStateDriver( self.StanceBarParent, 'visibility', 'show' );
         else
-            ObjectiveTrackerFrame:SetCollapsed( true );
+            RegisterStateDriver( self.StanceBarParent, 'visibility', 'hide' );
+        end
+    end
+
+    -- Objective Tracker (Protected wrap to avoid spreading taint to GetAuraDataByIndex)
+    if( ObjectiveTrackerFrame ) then
+        local targetState = self:GetValue( 'ObjectiveTrackerCollapsed' ) == true
+        if( ObjectiveTrackerFrame.SetCollapsedState ) then
+            ObjectiveTrackerFrame:SetCollapsedState( targetState );
+        else
+            securecall( function()
+                ObjectiveTrackerFrame:SetCollapsed( targetState );
+            end );
         end
     end
 
     -- Actionbar 2
     if( MultiBarBottomLeft ) then
         if( self:GetValue( 'MultiBarBottomLeftShown' ) ) then
-            MultiBarBottomLeft:Show();
+            RegisterStateDriver( MultiBarBottomLeft, 'visibility', 'show' );
         else
-            MultiBarBottomLeft:Hide();
+            RegisterStateDriver( MultiBarBottomLeft, 'visibility', 'hide' );
         end
     end
 
     -- Actionbar 3
     if( MultiBarBottomRight ) then
         if( self:GetValue( 'MultiBarBottomRightShown' ) ) then
-            MultiBarBottomRight:Show();
+            RegisterStateDriver( MultiBarBottomRight, 'visibility', 'show' );
         else
-            MultiBarBottomRight:Hide();
+            RegisterStateDriver( MultiBarBottomRight, 'visibility', 'hide' );
         end
     end
 
     -- Multibar 4
     if( MultiBarLeft ) then
         if( self:GetValue( 'MultiBarLeftShown' ) ) then
-            MultiBarLeft:Show();
+            RegisterStateDriver( MultiBarLeft, 'visibility', 'show' );
         else
-            MultiBarLeft:Hide();
+            RegisterStateDriver( MultiBarLeft, 'visibility', 'hide' );
         end
     end
 
     -- Multibar 5
     if( MultiBarRight ) then
         if( self:GetValue( 'MultiBarRightShown' ) ) then
-            MultiBarRight:Show();
+            RegisterStateDriver( MultiBarRight, 'visibility', 'show' );
         else
-            MultiBarRight:Hide();
+            RegisterStateDriver( MultiBarRight, 'visibility', 'hide' );
         end
     end
 
     -- PlayerFrame
     if( RegisterAttributeDriver and PlayerFrame ) then
         if( not self:GetValue( 'PlayerFrameAlwaysShown' ) ) then
-            RegisterAttributeDriver( PlayerFrame,"state-visibility","[combat] show; hide" );
+            RegisterAttributeDriver( PlayerFrame, "state-visibility", "[combat] show; hide" );
+        else
+            UnregisterAttributeDriver( PlayerFrame, "state-visibility" );
         end
     end
 
@@ -95,34 +100,29 @@ function jFrames:Refresh()
 end
 
 function jFrames:OnEnable()
-    -- Actionbar 1
+    -- Actionbar 1 Parent Setup
     if( MainActionBar ) then
-        local MainActionBarParent = CreateFrame( 'Frame',nil,UIParent,'SecureHandlerStateTemplate' );
-        MainActionBar:SetParent( MainActionBarParent);
+        -- We assign the parents to self variables so they can be securely toggled via RegisterStateDriver
+        self.MainActionBarParent = CreateFrame( 'Frame', nil, UIParent, 'SecureHandlerStateTemplate' );
+        MainActionBar:SetParent( self.MainActionBarParent );
     end
-    -- Stancebar
+    
+    -- Stancebar Parent Setup
     if( StanceBar ) then
-        local StanceBarParent = CreateFrame( 'Frame',nil,UIParent,'SecureHandlerStateTemplate' );
-        StanceBar:SetParent( StanceBarParent);
+        self.StanceBarParent = CreateFrame( 'Frame', nil, UIParent, 'SecureHandlerStateTemplate' );
+        StanceBar:SetParent( self.StanceBarParent );
     end
 
     -- Forcefully override Interface > Options changes
-    hooksecurefunc( 'MultiActionBar_Update',function()
+    hooksecurefunc( 'MultiActionBar_Update', function()
         self:Refresh();
     end );
 
     if( EditModeManager ) then
-        hooksecurefunc( EditModeManager,'OnLayoutApplied',function()
+        hooksecurefunc( EditModeManager, 'OnLayoutApplied', function()
             self:Refresh();
         end)
     end
-
-    --[[
-    Frames.Events = CreateFrame( 'Frame' );
-    Frames.Events:SetScript( 'OnEvent',function( self,Event,... )
-        if( Event == )
-    end );
-    ]]
 
     -- Remove Vehicle from MainMenuBar
     if( MainMenuBarVehicleLeaveButton ) then
@@ -131,12 +131,11 @@ function jFrames:OnEnable()
 end
 
 function jFrames:ConfigOpen( Input )
-    if( ( Library:IsRetail() and InCombatLockdown() ) ) then
+    if( InCombatLockdown() ) then
         Library.FRAMES:Error( 'You are in combat' );
         return;
     end
     if( not Input or Input:trim() == "" ) then
-
         if( InterfaceOptionsFrame_OpenToCategory ) then
             InterfaceOptionsFrame_OpenToCategory( self.CategoryID );
         else
